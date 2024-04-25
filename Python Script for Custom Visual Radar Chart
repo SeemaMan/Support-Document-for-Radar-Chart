@@ -1,0 +1,40 @@
+# The following code to create a dataframe and remove duplicated rows is always executed and acts as a preamble for your script: 
+
+# dataset = pandas.DataFrame(Product_Category)
+# dataset = dataset.drop_duplicates()
+
+# Paste or type your script code here:
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+categories = dataset['Product_Category'].unique()
+num_categories = len(categories)
+
+fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(polar=True))
+
+
+angles = np.linspace(0, 2 * np.pi, num_categories, endpoint=False).tolist()
+
+
+for i, category in enumerate(categories):
+    
+    category_data = dataset[dataset['Product_Category'] == category]
+    
+    
+    mean_amount = category_data['Amount'].mean()
+    
+    
+    ax.plot([angles[i], angles[i]], [0, mean_amount], linewidth=2, linestyle='solid', label=category)
+
+ax.set_theta_offset(np.pi / 2)
+ax.set_theta_direction(-1)
+ax.set_rlabel_position(0)
+plt.xticks(angles, categories)
+plt.xlabel('Product Category')
+plt.title('Radar Chart of Mean Amount by Product Category')
+plt.legend(loc='upper right', bbox_to_anchor=(1.1, 1))
+
+
+plt.show()
+
